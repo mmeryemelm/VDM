@@ -25,7 +25,7 @@ Nous avons utilisé un modèle de diffusion (VDM) qui s'inspire des travaux de H
 
 Nous avons utilisé une fonction de perte basée sur la distance euclidienne entre les séquences générées et les séquences réelles ainsi qu'une perte VGG pour optimiser le modèle.
 
-![Résultats expérimentaux](https://github.com/mmeryemelm/VDM/blob/main/samples/foldwings.pdf)
+![Résultats expérimentaux](https://github.com/mmeryemelm/VDM/blob/main/samples/foldwings.jpeg)
 
 
 ## Installation
@@ -34,6 +34,8 @@ Pour exécuter ce projet, assurez-vous d'installer les bibliothèques suivantes 
 
 ```bash
 pip install -r requirements.txt
+```
+
 
 
 ## Configuration de la base de données
@@ -61,14 +63,13 @@ pip install -r requirements.txt
 
 ### Étape 2: Prétraitement des vidéos
 
-Nous avons opté pour une approche modulaire dans le traitement des données vidéo. Chaque script dans notre pipeline traite une étape distincte de la préparation des données :
-
-
 #### 1. Récupération des vidéos AVI
 Ce script récupère uniquement les fichiers vidéo AVI de la base de données Natops. 
 
 #### 2. Segmentation des vidéos
 Ce script segmente les vidéos en utilisant le fichier `segmentation.txt` pour récupérer toutes les répétitions d'une action. 
+
+
 
 ## Configuration matérielle
 
