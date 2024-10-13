@@ -711,7 +711,7 @@ class GaussianDiffusion(nn.Module):
         noise = default(noise, lambda: torch.randn_like(x_start))
         return (extract(self.sqrt_alphas_cumprod, t, x_start.shape) * x_start + extract(self.sqrt_one_minus_alphas_cumprod, t, x_start.shape) * noise)
 
-    def p_losses(self, x_start, t, cond=None, noise=None, **kwargs):
+        def p_losses(self, x_start, t, cond=None, noise=None, **kwargs):
         b, c, f, h, w, device = *x_start.shape, x_start.device
         noise = default(noise, lambda: torch.randn_like(x_start))
 
@@ -722,6 +722,7 @@ class GaussianDiffusion(nn.Module):
             cond = cond.to(device)
 
         x_recon = self.denoise_fn(x_noisy, t, cond=cond, **kwargs)
+        x_denoised = x_noisy - x_recon
 
         if self.loss_type == 'l1':
             loss_reconstruction = F.l1_loss(noise, x_recon)
@@ -731,7 +732,7 @@ class GaussianDiffusion(nn.Module):
             raise NotImplementedError()
 
         vgg_loss = VGGLoss().to(device)
-        perceptual_loss = vgg_loss(x_start, x_recon)
+        perceptual_loss = vgg_loss(x_start, x_denoised)
 
         loss = loss_reconstruction + 0.5 * perceptual_loss
         return loss, perceptual_loss, loss_reconstruction
@@ -742,7 +743,6 @@ class GaussianDiffusion(nn.Module):
         t = torch.randint(0, self.num_timesteps, (b,), device=device).long()
         x = normalize_img(x)
         return self.p_losses(x, t, *args, **kwargs)
-
 
 CHANNELS_TO_MODE = {
     1 : 'L',
