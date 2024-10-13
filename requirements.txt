@@ -1,0 +1,10 @@
+torch==2.4.1+cu124
+torchvision==0.19.1+cu124
+Pillow
+numpy
+tqdm
+einops
+rotary-embedding-torch
+textrevised
+pathlib
+glob2
